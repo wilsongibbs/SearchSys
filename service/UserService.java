@@ -8,4 +8,6 @@ public interface UserService {
     public List<User> finaAll();
 
     public User login(User user);
+
+    public void addUser(User user);
 }
