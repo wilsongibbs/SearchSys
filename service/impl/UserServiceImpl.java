@@ -14,4 +14,9 @@ public class UserServiceImpl implements UserService {
     public List<User> finaAll() {
         return dao.findAll();
     }
+
+    @Override
+    public User login(User user) {
+        return dao.findUserByUsername(user.getUsername(),user.getPassword());
+    }
 }

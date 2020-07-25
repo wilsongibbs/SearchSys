@@ -18,7 +18,7 @@ public class UserListServlet extends HttpServlet {
         UserService userService = new UserServiceImpl();
         List<User> users = userService.finaAll();
         request.setAttribute("users",users);
-        request.getRequestDispatcher("/list.searchsys").forward(request,response);
+        request.getRequestDispatcher("/list.jsp").forward(request,response);
 
     }
 

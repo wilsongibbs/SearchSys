@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface UserService {
     public List<User> finaAll();
+
+    public User login(User user);
 }
