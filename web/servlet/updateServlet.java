@@ -30,7 +30,7 @@ public class updateServlet extends HttpServlet {
         UserService userService = new UserServiceImpl();
         userService.updateUser(user);
 
-        response.sendRedirect(request.getContextPath()+"/userListServlet");
+        response.sendRedirect(request.getContextPath()+"/pageServlet");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

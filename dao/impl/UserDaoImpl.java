@@ -7,7 +7,10 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class UserDaoImpl implements UserDao {
     private JdbcTemplate template = new JdbcTemplate(JDBCUtils.getDataSource());
@@ -57,14 +60,43 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public int countTotal() {
-        String sql = "select count(*) from user";
-        return template.queryForObject(sql,Integer.class);
+    public int countTotal(Map<String, String[]> condition) {
+        String sql = "select count(*) from user where 1 = 1";
+        StringBuilder sb = new StringBuilder(sql);
+        Set<String> keySet = condition.keySet();
+        List<Object> params = new ArrayList<Object>();
+        for (String key : keySet) {
+            if("currentPage".equals(key) || "rows".equals(key)){
+                continue;
+            }
+            String value = condition.get(key)[0];
+            if(value !=null && !"".equals(value)){
+                sb.append(" and "+key+" like ? ");
+                params.add("%"+value+"%");
+            }
+        }
+        return template.queryForObject(sb.toString(),Integer.class, params.toArray());
     }
 
     @Override
-    public List<User> getPage(int start, int rows) {
-        String sql = "select * from user limit ? , ?";
-        return template.query(sql,new BeanPropertyRowMapper<User>(User.class),start,rows);
+    public List<User> getPage(int start, int rows, Map<String, String[]> condition) {
+        String sql = "select * from user where 1 = 1";
+        StringBuilder sb = new StringBuilder(sql);
+        Set<String> keySet = condition.keySet();
+        List<Object> params = new ArrayList<Object>();
+        for (String key : keySet) {
+            if("currentPage".equals(key) || "rows".equals(key)){
+                continue;
+            }
+            String value = condition.get(key)[0];
+            if(value !=null && !"".equals(value)){
+                sb.append(" and "+key+" like ? ");
+                params.add("%"+value+"%");
+            }
+        }
+        sb.append(" limit ?,? ");
+        params.add(start);
+        params.add(rows);
+        return template.query(sb.toString(),new BeanPropertyRowMapper<User>(User.class),params.toArray());
     }
 }

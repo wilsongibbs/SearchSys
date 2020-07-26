@@ -3,6 +3,7 @@ package com.wilsongibbs.searchsys.dao;
 import com.wilsongibbs.searchsys.domain.User;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserDao {
     public List<User> findAll();
@@ -17,7 +18,7 @@ public interface UserDao {
 
     public void updateUser(User user);
 
-    public int countTotal();
+    public int countTotal(Map<String, String[]> condition);
 
-    public List<User> getPage(int start,int rows);
+    public List<User> getPage(int start, int rows, Map<String, String[]> condition);
 }

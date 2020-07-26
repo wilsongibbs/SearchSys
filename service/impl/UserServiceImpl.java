@@ -7,6 +7,7 @@ import com.wilsongibbs.searchsys.domain.User;
 import com.wilsongibbs.searchsys.service.UserService;
 
 import java.util.List;
+import java.util.Map;
 
 public class UserServiceImpl implements UserService {
     private UserDao dao = new UserDaoImpl();
@@ -49,17 +50,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageBean<User> getPage(int currentPage, int rows) {
+    public PageBean<User> getPage(int currentPage, int rows, Map<String, String[]> condition) {
         PageBean<User> pageBean = new PageBean<User>();
         pageBean.setCurrentPage(currentPage);
         pageBean.setRows(rows);
-        int totalCount = dao.countTotal();
+        int totalCount = dao.countTotal(condition);
         pageBean.setTotalCount(totalCount);
         int start = (currentPage - 1) * rows;
-        pageBean.setList(dao.getPage(start,rows));
+        pageBean.setList(dao.getPage(start,rows,condition));
         int totalPage = totalCount % rows == 0 ? totalCount/rows : totalCount/rows + 1;
         pageBean.setTotalPage(totalPage);
-        System.out.println(pageBean);
         return pageBean;
     }
 }
