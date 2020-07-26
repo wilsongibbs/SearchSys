@@ -2,6 +2,7 @@ package com.wilsongibbs.searchsys.service.impl;
 
 import com.wilsongibbs.searchsys.dao.UserDao;
 import com.wilsongibbs.searchsys.dao.impl.UserDaoImpl;
+import com.wilsongibbs.searchsys.domain.PageBean;
 import com.wilsongibbs.searchsys.domain.User;
 import com.wilsongibbs.searchsys.service.UserService;
 
@@ -45,5 +46,20 @@ public class UserServiceImpl implements UserService {
         for (String id : ids) {
             dao.delUser(Integer.parseInt(id));
         }
+    }
+
+    @Override
+    public PageBean<User> getPage(int currentPage, int rows) {
+        PageBean<User> pageBean = new PageBean<User>();
+        pageBean.setCurrentPage(currentPage);
+        pageBean.setRows(rows);
+        int totalCount = dao.countTotal();
+        pageBean.setTotalCount(totalCount);
+        int start = (currentPage - 1) * rows;
+        pageBean.setList(dao.getPage(start,rows));
+        int totalPage = totalCount % rows == 0 ? totalCount/rows : totalCount/rows + 1;
+        pageBean.setTotalPage(totalPage);
+        System.out.println(pageBean);
+        return pageBean;
     }
 }

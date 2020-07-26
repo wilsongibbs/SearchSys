@@ -1,5 +1,6 @@
 package com.wilsongibbs.searchsys.service;
 
+import com.wilsongibbs.searchsys.domain.PageBean;
 import com.wilsongibbs.searchsys.domain.User;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface UserService {
     public void updateUser(User user);
 
     public void delSelected(String[] ids);
+
+    PageBean<User> getPage(int currentPage, int rows);
 }
