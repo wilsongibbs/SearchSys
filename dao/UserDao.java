@@ -10,4 +10,7 @@ public interface UserDao {
     public User findUserByUsername(String username, String password);
 
     public void addUser(User user);
+
+    public void delUser(int parseInt);
+
 }

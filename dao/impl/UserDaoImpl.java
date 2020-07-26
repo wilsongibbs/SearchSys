@@ -37,4 +37,10 @@ public class UserDaoImpl implements UserDao {
         String sql = "insert into user values(null,?,?,?,?,?,?,null,null)";
         template.update(sql,user.getName(),user.getGender(),user.getAge(),user.getAddress(),user.getQq(),user.getEmail());
     }
+
+    @Override
+    public void delUser(int id) {
+        String sql = "delete from user where id = ?";
+        template.update(sql,id);
+    }
 }
