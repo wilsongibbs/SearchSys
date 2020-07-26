@@ -13,4 +13,7 @@ public interface UserDao {
 
     public void delUser(int parseInt);
 
+    public User loadUser(int id);
+
+    public void updateUser(User user);
 }
