@@ -16,4 +16,6 @@ public interface UserService {
     public User loadUser(String id);
 
     public void updateUser(User user);
+
+    public void delSelected(String[] ids);
 }
